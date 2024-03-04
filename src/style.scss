@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Raleway', sans-serif;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+a {
+  text-decoration: none;
+  font-family: 'Raleway', sans-serif;
+}
+
+ul,ol,li {
+  list-style: none;
+}
+
+.section-title {
+  color: #252525;
+  font-family: "Raleway", serif;
+  font-size: 36px;
+  font-weight: 300;
+}
+
+.title {
+  color: #252525;
+  font-family: "Raleway", serif;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+input {
+  all: unset;
+}
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.w {
+  &-100 {
+    width: 100%;
+  }
+
+  &-443 {
+    width: 443px;
+  }
+}
+
+.bg {
+  &-yellow {
+    background: #E0BEA2;
+  }
+  &-white {
+    background: white;
+  }
+}
+
+.color {
+  &-white {
+    color: #FFF;
+  }
+  &-black {
+    color: #252525;
+    border: 0.5px solid #252525;
+  }
+}
+
+.price {
+  color: #252525;
+  text-align: center;
+  font-family: "Raleway", serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+// Pagination
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  margin-top: 30px;
+}
+
+.paginate-buttons {
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  background-color: #CCA88A;
+  border: 1px solid #CCA88A;
+  color: white;
+}
+
+.paginate-buttons:hover {
+  background-color: #CCA88A;
+  opacity: .7;
+  transition: .3s all ease;
+}
+
+.active-page {
+  background-color: #CCA88A;
+  border: 1px solid #CCA88A;
+  color: white;
+  opacity: .7;
+}
+
+.component-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.m {
+  &-t {
+    &-10 {
+      margin-top: 10px;
+    }
+  }
+  &-b {
+    &-10 {
+      margin-bottom: 10px;
+    }
+  }
+}
