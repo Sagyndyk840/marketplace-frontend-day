@@ -21,9 +21,9 @@ export default {
           <router-link :to="{name: 'HomePage'}">Главная</router-link>
           <router-link :to="{name: 'RegisterPage'}">Нет аккаунта?</router-link>
         </div>
-        <Button title="Войти" >
+        <Button title="Войти" :loader="false">
           <template v-slot:loader>
-            <clip-loader :loading="true" color="white"></clip-loader>
+            <clip-loader :loading="false" color="white"></clip-loader>
           </template>
         </Button>
       </div>

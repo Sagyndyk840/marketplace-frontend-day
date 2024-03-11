@@ -1,9 +1,10 @@
 <script>
 import Button from "@/components/Button.vue";
+import ClipLoader from "vue-spinner/src/ClipLoader.vue";
 
 export default {
   name: "RegisterPage",
-  components: {Button}
+  components: {Button, ClipLoader}
 }
 </script>
 
@@ -21,7 +22,11 @@ export default {
           <router-link :to="{name: 'HomePage'}">Главная</router-link>
           <router-link :to="{name: 'LoginPage'}">Есть аккаунт?</router-link>
         </div>
-        <Button title="ЗАРЕГИСТРИРОВАТЬСЯ" />
+        <Button title="ЗАРЕГИСТРИРОВАТЬСЯ" :loader="false">
+          <template v-slot:loader>
+            <clip-loader :loading="false" color="white"></clip-loader>
+          </template>
+        </Button>
       </div>
     </div>
   </section>
