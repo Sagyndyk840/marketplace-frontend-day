@@ -7,6 +7,7 @@ import useVuelidate from "@vuelidate/core";
 
 export default {
   name: "LoginPage",
+  components: {Input, Button, ClipLoader},
   setup () {
     return {v$: useVuelidate() }
   },
@@ -41,7 +42,6 @@ export default {
       if (this.v$.$error) return
     }
   },
-  components: {Input, Button, ClipLoader}
 }
 </script>
 
@@ -59,7 +59,7 @@ export default {
           <router-link :to="{name: 'HomePage'}">Главная</router-link>
           <router-link :to="{name: 'RegisterPage'}">Нет аккаунта?</router-link>
         </div>
-        <Button title="Войти" :loader="false">
+        <Button @click="login" title="Войти" :loader="false">
           <template v-slot:loader>
             <clip-loader :loading="false" color="white"></clip-loader>
           </template>
