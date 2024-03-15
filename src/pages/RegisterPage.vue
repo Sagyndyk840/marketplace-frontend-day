@@ -24,6 +24,7 @@ export default {
   methods: {
     async register () {
       this.v$.$validate()
+      
       if (this.v$.$error) return
     }
   },
