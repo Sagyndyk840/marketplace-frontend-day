@@ -52,7 +52,7 @@ export default {
     </div>
     <div class="auth-right">
       <div class="auth-card w-443">
-        <h2 class="title auth-title">Авторизация</h2>
+        <h2 class="title auth-title">Авторизация </h2>
         <Input :errors="v$.form.email.$errors" v-model:value="form.email" placeholder="Ваш e-mail*" type="text" :disabled="false"/>
         <Input :errors="v$.form.password.$errors" v-model:value="form.password" placeholder="Ваш пароль*" type="password" :disabled="false"/>
         <div class="auth-inner">

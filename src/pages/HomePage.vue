@@ -2,9 +2,19 @@
 import {Swiper, SwiperSlide } from 'swiper/vue';
 
 import 'swiper/css';
+import {useCategoryStore} from "@/stores/categories.js";
+import Skeleton from "@/components/Skeleton.vue";
 export default {
+  setup () {
+    const categoryStore = useCategoryStore()
+
+    return {categoryStore}
+  },
   name: "HomePage",
-  components: {Swiper, SwiperSlide}
+  components: {Skeleton, Swiper, SwiperSlide},
+  async mounted() {
+    await this.categoryStore.getCategories()
+  }
 }
 </script>
 
@@ -15,7 +25,7 @@ export default {
         <h2 class="hero-title">
           Новая коллекция
         </h2>
-        <a href="" class="hero-link">Смотреть Новинки</a>
+        <a href="" class="hero-link">{{ categoryStore.loading}} Смотреть Новинки</a>
       </div>
     </div>
   </section>
@@ -24,49 +34,21 @@ export default {
     <div class="container">
       <div class="catalog-inner">
         <div class="catalog-title section-title">Категории</div>
-
+        <div class="catalog-group" v-if="categoryStore.loading">
+          <Skeleton height="400px" class="catalog-item" v-for="index in 4" :key="index"/>
+        </div>
         <swiper
+            v-else
             :slides-per-view="4"
             :space-between="15"
             class="catalog-group"
         >
-          <swiper-slide>
+          <swiper-slide v-for="category in categoryStore.categories" :key="category.id">
             <router-link to="/" class="catalog-item">
-              <img src="../images/dist/catalog-item.png" alt="">
-              <div class="catalog-item__title">Куртки</div>
+              <img :src="category.image" alt="">
+              <div class="catalog-item__title">{{ category.title }}</div>
             </router-link>
           </swiper-slide>
-          <swiper-slide>
-            <router-link to="/" class="catalog-item">
-              <img src="../images/dist/catalog-item.png" alt="">
-              <div class="catalog-item__title">Куртки</div>
-            </router-link>
-          </swiper-slide>
-          <swiper-slide>
-            <router-link to="/" class="catalog-item">
-              <img src="../images/dist/catalog-item.png" alt="">
-              <div class="catalog-item__title">Куртки</div>
-            </router-link>
-          </swiper-slide>
-          <swiper-slide>
-            <router-link to="/" class="catalog-item">
-              <img src="../images/dist/catalog-item.png" alt="">
-              <div class="catalog-item__title">Куртки</div>
-            </router-link>
-          </swiper-slide>
-          <swiper-slide>
-            <router-link to="/" class="catalog-item">
-              <img src="../images/dist/catalog-item.png" alt="">
-              <div class="catalog-item__title">Куртки</div>
-            </router-link>
-          </swiper-slide>
-          <swiper-slide>
-            <router-link to="/" class="catalog-item">
-              <img src="../images/dist/catalog-item.png" alt="">
-              <div class="catalog-item__title">Куртки</div>
-            </router-link>
-          </swiper-slide>
-
 
         </swiper>
       </div>
