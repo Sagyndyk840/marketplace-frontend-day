@@ -1,11 +1,16 @@
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  props: {
+    global: {
+      type: Boolean
+    }
+  }
 }
 </script>
 
 <template>
-  <header class="header header-first">
+  <header class="header header-first" :class="global ? 'header-second' : 'header-first'">
     <div class="container">
       <div class="header-inner">
         <nav class="header-item header-menu">
@@ -14,7 +19,7 @@ export default {
               <a href="">NEW</a>
             </li>
             <li>
-              <a href="">КАТАЛОГ</a>
+              <router-link :to="{name: 'CategoryPage'}">КАТАЛОГ</router-link>
             </li>
             <li>
               <a href="">О НАС</a>
@@ -22,7 +27,8 @@ export default {
           </ul>
         </nav>
         <a href="" class="logo">
-          <img src="@png/logo.png" alt="">
+          <img v-if="global" src="@png/logo-22.png" alt="">
+          <img v-else src="@png/logo.png" alt="">
         </a>
         <ul class="header-icons">
           <li>

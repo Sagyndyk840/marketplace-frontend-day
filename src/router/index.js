@@ -27,6 +27,17 @@ const routes = [
                 name: 'RegisterPage'
             }
         ]
+    },
+    {
+        path: '/',
+        component: () => import('@/layouts/DefaultLayout.vue'),
+        children: [
+            {
+                path: '/category',
+                component: () => import('@/pages/CategoryPage.vue'),
+                name: 'CategoryPage'
+            }
+        ]
     }
 ]
 
