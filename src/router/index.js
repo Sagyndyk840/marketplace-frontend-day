@@ -36,6 +36,16 @@ const routes = [
                 path: '/category',
                 component: () => import('@/pages/CategoryPage.vue'),
                 name: 'CategoryPage'
+            },
+            {
+                path: '/product/:id',
+                component: () => import('@/pages/ProductPage.vue'),
+                name: 'ProductPage'
+            },
+            {
+                path: '/favorite',
+                component: () => import('@/pages/FavoritePage.vue'),
+                name: "FavoritePage"
             }
         ]
     }

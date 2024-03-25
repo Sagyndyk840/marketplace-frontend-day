@@ -4,14 +4,16 @@ import ProductItem from "@/components/ProductItem.vue";
 import {useProductStore} from "@/stores/product.js";
 import {VueAwesomePaginate} from "vue-awesome-paginate";
 import Skeleton from "@/components/Skeleton.vue";
+import {useFavoriteStore} from "@/stores/favotire.js";
 
 export default {
   name: "CategoryPage",
   components: {Skeleton, VueAwesomePaginate, ProductItem, CategoryRouteList},
   setup () {
     const productStore = useProductStore()
+    const favoriteStore = useFavoriteStore()
 
-    return {productStore}
+    return {productStore, favoriteStore}
   },
   mounted() {
     this.productStore.getProducts({
@@ -48,10 +50,11 @@ export default {
               :img="product.image"
               :title="product.title"
               :price="product.price"
-              :router="{name: 'CategoryPage'}"
+              :router="{name: 'ProductPage', params: {id: product.id}}"
               :sizes="product.size"
               :colors="product.color"
-              :favorite-active="false"
+              @favorite="favoriteStore.toggleFavorite(product)"
+              :favorite-active="favoriteStore.isFavorite(product)"
             />
           </div>
         <vue-awesome-paginate
