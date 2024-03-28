@@ -2,18 +2,43 @@
 import Button from "@/components/Button.vue";
 import {useProductStore} from "@/stores/product.js";
 import {useFavoriteStore} from "@/stores/favotire.js";
+import Select from "@/components/Select.vue";
+import {useVuelidate} from "@vuelidate/core";
+import {helpers, required} from "@vuelidate/validators";
 
 export default {
   name: "ProductPage",
-  components: {Button},
+  components: {Select, Button},
   setup () {
     const productStore = useProductStore()
     const favoriteStore = useFavoriteStore()
 
-    return {productStore, favoriteStore}
+    return {productStore, favoriteStore, v$: useVuelidate()}
+  },
+  data () {
+    return {
+      form: {
+        selectSize: '',
+        changeColor: ''
+      }
+    }
   },
   mounted() {
     this.productStore.getProduct(this.$route.params.id)
+  },
+  validations () {
+    return {
+      form: {
+        selectSize : {
+          required: helpers.withMessage('Пожалуйста, выберите размер товара', required),
+          $autoDirty: true
+        },
+        changeColor: {
+          required: helpers.withMessage('Пожалуйста, выберите цвет товара', required),
+          $autoDirty: true
+        }
+      }
+    }
   }
 }
 </script>
@@ -40,11 +65,14 @@ export default {
                    :style="{'background-color': color.value}">
           </div>
           <div class="color-title">Цвет: Кофе с молоком меланж</div>
-          <select  class="select single-product__select">
-            <option selected value="Выберите размер" disabled>Выберите размер</option>
-            <option value="XS" >XS</option>
-            <option value="XXS" >XXS</option>
-          </select>
+          <Select option-id="id"
+                  option-value="value"
+                  :options="productStore.product.size"
+                  v-model:value="form.selectSize"
+                  class-name="single-product__select m-t-10"
+                  width="100%"
+                  :errors="v$.form.selectSize.$errors"/>
+
           <div class="single-product__group--btns">
             <Button title="В КОРЗИНУ" class-name="bg-yellow color-white"></Button>
             <Button @click="favoriteStore.toggleFavorite(productStore.product)"

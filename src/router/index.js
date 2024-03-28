@@ -8,13 +8,19 @@ const routes = [
             {
                 path: '',
                 component: () => import('@/pages/HomePage.vue'),
-                name: 'HomePage'
+                name: 'HomePage',
+                meta: {
+                    roles: ['guest', 'auth']
+                }
             }
         ]
     },
     {
         path: '/',
         component: () => import('@/layouts/AuthLayout.vue'),
+        meta: {
+            roles: ['guest']
+        },
         children: [
             {
                 path: '/login',
@@ -35,17 +41,34 @@ const routes = [
             {
                 path: '/category',
                 component: () => import('@/pages/CategoryPage.vue'),
-                name: 'CategoryPage'
+                name: 'CategoryPage',
+                meta: {
+                    roles: ['guest', 'auth']
+                }
             },
             {
                 path: '/product/:id',
                 component: () => import('@/pages/ProductPage.vue'),
-                name: 'ProductPage'
+                name: 'ProductPage',
+                meta: {
+                    roles: ['guest', 'auth']
+                }
             },
             {
                 path: '/favorite',
                 component: () => import('@/pages/FavoritePage.vue'),
-                name: "FavoritePage"
+                name: "FavoritePage",
+                meta: {
+                    roles: ['guest', 'auth']
+                }
+            },
+            {
+                path: '/cart',
+                component: () => import('@/pages/CartPage.vue'),
+                name: 'CartPage',
+                meta: {
+                    roles: ['auth']
+                }
             }
         ]
     }
@@ -54,6 +77,20 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
+})
+
+
+router.beforeEach((to, from , next) => {
+    let token = sessionStorage.getItem('token')
+
+    const allowedRoles = to.meta.roles
+
+    if (allowedRoles && allowedRoles.includes('guest') && !token) {
+        next()
+    } else if (allowedRoles && allowedRoles.includes('auth') && token) {
+        next()
+    }
+
 })
 
 

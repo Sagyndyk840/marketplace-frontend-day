@@ -4,12 +4,15 @@ import ClipLoader from "vue-spinner/src/ClipLoader.vue";
 import {email, helpers, minLength, required, sameAs} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import Input from "@/components/Input.vue";
+import {useAuthStore} from "@/stores/auth.js";
 
 export default {
   name: "RegisterPage",
   components: {Button, ClipLoader, Input},
   setup () {
-    return { v$: useVuelidate() }
+    const authStore = useAuthStore()
+
+    return { v$: useVuelidate(), authStore }
   },
   data () {
     return {
@@ -26,6 +29,7 @@ export default {
       this.v$.$validate()
       
       if (this.v$.$error) return
+      await this.authStore.register(this.form)
     }
   },
   validations () {
@@ -73,9 +77,9 @@ export default {
           <router-link :to="{name: 'HomePage'}">Главная</router-link>
           <router-link :to="{name: 'LoginPage'}">Есть аккаунт?</router-link>
         </div>
-        <Button @click="register" title="ЗАРЕГИСТРИРОВАТЬСЯ" :loader="false">
+        <Button @click="register" title="ЗАРЕГИСТРИРОВАТЬСЯ" :loader="authStore.loading">
           <template v-slot:loader>
-            <clip-loader :loading="false" color="white"></clip-loader>
+            <clip-loader :loading="authStore.loading" color="white"></clip-loader>
           </template>
         </Button>
       </div>
