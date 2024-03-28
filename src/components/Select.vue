@@ -6,16 +6,10 @@ export default {
   components: {ErrorMessage},
   props: {
     className: {
-      type: String,
+      type: String
     },
     width: {
       type: String
-    },
-    value: {
-      type: String
-    },
-    errors: {
-      type: Array
     },
     options: {
       type: Array,
@@ -26,6 +20,10 @@ export default {
     },
     optionValue: {
       type: String
+    },
+    errors: {
+      type: Array,
+      required: false
     }
   },
   methods: {
@@ -38,18 +36,17 @@ export default {
 
 <template>
   <div class="component-form" :style="{width: width}">
-    <select @change="handleSelectChange" :class="className" class="select ">
-      <option selected disabled>Выберите размер</option>
+    <select @change="handleSelectChange" class="select" :class="className">
+      <option selected disabled>Выбрать</option>
       <option v-for="option in options"
               :key="option[optionId]"
               :value="option[optionValue]"
               :selected="option.selected"
-              :disabled="option.disabled"
-      >
-        {{ option[optionValue] }}
+              :disabled="option.disabled">
+        {{option[optionValue]}}
       </option>
     </select>
-    <div class="m-t-10">
+    <div class="div m-t-10">
       <ErrorMessage :errors="errors" />
     </div>
   </div>

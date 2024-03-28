@@ -4,12 +4,15 @@ import ClipLoader from "vue-spinner/src/ClipLoader.vue";
 import Input from "@/components/Input.vue";
 import {email, helpers, required, minLength} from '@vuelidate/validators'
 import useVuelidate from "@vuelidate/core";
+import {useAuthStore} from "@/stores/auth.js";
 
 export default {
   name: "LoginPage",
   components: {Input, Button, ClipLoader},
   setup () {
-    return {v$: useVuelidate() }
+    const authStore = useAuthStore()
+
+    return {v$: useVuelidate(), authStore }
   },
   data () {
     return {
@@ -36,10 +39,11 @@ export default {
     }
   },
   methods: {
-    login () {
+    async login () {
       this.v$.$validate()
 
       if (this.v$.$error) return
+      await this.authStore.register(this.form)
     }
   },
 }

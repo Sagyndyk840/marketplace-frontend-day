@@ -11,6 +11,7 @@ export default {
   components: {Button, ClipLoader, Input},
   setup () {
     const authStore = useAuthStore()
+
     return { v$: useVuelidate(), authStore }
   },
   data () {

@@ -10,7 +10,7 @@ const routes = [
                 component: () => import('@/pages/HomePage.vue'),
                 name: 'HomePage',
                 meta: {
-                    roles: ['auth', 'guest']
+                    roles: ['guest', 'auth']
                 }
             }
         ]
@@ -43,7 +43,7 @@ const routes = [
                 component: () => import('@/pages/CategoryPage.vue'),
                 name: 'CategoryPage',
                 meta: {
-                    roles: ['auth', 'guest']
+                    roles: ['guest', 'auth']
                 }
             },
             {
@@ -51,7 +51,7 @@ const routes = [
                 component: () => import('@/pages/ProductPage.vue'),
                 name: 'ProductPage',
                 meta: {
-                    roles: ['auth', 'guest']
+                    roles: ['guest', 'auth']
                 }
             },
             {
@@ -59,7 +59,7 @@ const routes = [
                 component: () => import('@/pages/FavoritePage.vue'),
                 name: "FavoritePage",
                 meta: {
-                    roles: ['auth', 'guest']
+                    roles: ['guest', 'auth']
                 }
             },
             {
@@ -74,22 +74,20 @@ const routes = [
     }
 ]
 
-
-
 const router = createRouter({
     history: createWebHistory(),
     routes
 })
 
-router.beforeEach((to, from, next) => {
 
+router.beforeEach((to, from , next) => {
     let token = sessionStorage.getItem('token')
 
-    const allowed = to.meta.roles
+    const allowedRoles = to.meta.roles
 
-    if (allowed && allowed.includes('guest') && !token) {
+    if (allowedRoles && allowedRoles.includes('guest') && !token) {
         next()
-    } else if (allowed && allowed.includes('auth') && token) {
+    } else if (allowedRoles && allowedRoles.includes('auth') && token) {
         next()
     }
 
