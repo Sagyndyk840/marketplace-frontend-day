@@ -8,13 +8,19 @@ const routes = [
             {
                 path: '',
                 component: () => import('@/pages/HomePage.vue'),
-                name: 'HomePage'
+                name: 'HomePage',
+                meta: {
+                    roles: ['auth', 'guest']
+                }
             }
         ]
     },
     {
         path: '/',
         component: () => import('@/layouts/AuthLayout.vue'),
+        meta: {
+            roles: ['guest']
+        },
         children: [
             {
                 path: '/login',
@@ -35,25 +41,58 @@ const routes = [
             {
                 path: '/category',
                 component: () => import('@/pages/CategoryPage.vue'),
-                name: 'CategoryPage'
+                name: 'CategoryPage',
+                meta: {
+                    roles: ['auth', 'guest']
+                }
             },
             {
                 path: '/product/:id',
                 component: () => import('@/pages/ProductPage.vue'),
-                name: 'ProductPage'
+                name: 'ProductPage',
+                meta: {
+                    roles: ['auth', 'guest']
+                }
             },
             {
                 path: '/favorite',
                 component: () => import('@/pages/FavoritePage.vue'),
-                name: "FavoritePage"
+                name: "FavoritePage",
+                meta: {
+                    roles: ['auth', 'guest']
+                }
+            },
+            {
+                path: '/cart',
+                component: () => import('@/pages/CartPage.vue'),
+                name: 'CartPage',
+                meta: {
+                    roles: ['auth']
+                }
             }
         ]
     }
 ]
 
+
+
 const router = createRouter({
     history: createWebHistory(),
     routes
+})
+
+router.beforeEach((to, from, next) => {
+
+    let token = sessionStorage.getItem('token')
+
+    const allowed = to.meta.roles
+
+    if (allowed && allowed.includes('guest') && !token) {
+        next()
+    } else if (allowed && allowed.includes('auth') && token) {
+        next()
+    }
+
 })
 
 
